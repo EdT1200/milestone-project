@@ -17,6 +17,7 @@ class P1 {
         this.height = 30
     }
     create(){
+        //console.log("hello")
         c.fillStyle = "blue"
         c.fillRect(this.position.x, this.position.y, this.width, this.height,)
     }
@@ -46,11 +47,12 @@ function moveP1(){
     if(direction === 'down'){
         y = y - 1
     }
-    p1.style.left = x + 'px'
-    p1.style.bottom = y + 'px'
+    p1.position.x = x 
+    p1.position.y = y 
+    p1.create()
 }
 setInterval (moveP1, 1)
- 
+//moveP1()
 
 
-console.log(c)
+console.log(p1)
