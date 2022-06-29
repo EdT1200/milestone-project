@@ -49,10 +49,76 @@ function moveP1(){
     }
     p1.position.x = x 
     p1.position.y = y 
+    c.clearRect(0,0, canvas.width, canvas.height)
     p1.create()
-}
+    
+} 
 setInterval (moveP1, 1)
+
+function animate(){
+    requestAnimationFrame(animate);
+    console.log(red)
+    p1.create()
+    c.clearRect(0,0, canvas.width, canvas.height)
+}
+document.addEventListener("keydown", function(e){
+    if(e.key === "ArrowLeft"){
+        direction = "left"
+    }
+    if(e.key === "ArrowUp"){
+        direction = "up"
+    }
+    if(e.key === "ArrowRight"){
+        direction = "right"
+    }
+    if(e.key === "ArrowDown"){
+        direction = "down"
+    }
+})
+
+document.addEventListener("keydown", function(e){
+    if(e.repeat) return;
+    if(e.key === "ArrowLeft"){
+        direction = "left"
+    }
+    if(e.key === "ArrowUp"){
+        direction = "up"
+    }
+    if(e.key === "ArrowRight"){
+        direction = "right"
+    }
+    if(e.key === "ArrowDown"){
+        direction = "down"
+    }
+})
+document.addEventListener("keyup", function(e){
+    if(e.repeat) return;
+    if(e.key === "ArrowLeft"){
+        direction = null
+    }
+    if(e.key === "ArrowUp"){
+        direction = null
+    }
+    if(e.key === "ArrowRight"){
+        direction = null
+    }
+    if(e.key === "ArrowDown"){
+        direction = null
+    }
+})
+//function setInterval() {
+    //if(direction === "left"){
+    //}
+    //if(direction === "up") {
+    //}
+    //if(direction === "right") {      
+    //}
+    //if(direction === "down") {
+        
+    //}
+//}
+
 //moveP1()
 
 
-console.log(p1)
+//console.log(p1)
