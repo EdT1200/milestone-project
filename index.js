@@ -2,7 +2,7 @@ const canvas = document.querySelector("canvas")
 const c = canvas.getContext("2d")
 canvas.width = window.innerWidth
 canvas.height = innerHeight
-const gravity = 0.5
+//const gravity = 0.5
 class P1 {
     constructor() {
         this.position = {
@@ -45,7 +45,7 @@ class Platform {
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }   
 }
-const platforms = [ new Platform(0, 200), new Platform(400, 200), new Platform(900, 200), ]
+const platforms = [ new Platform(0, 200), new Platform(800, 200), new Platform(2000, 200), ]
 //platform.make()
 class Lava {
     constructor(x, y) {
@@ -61,7 +61,9 @@ class Lava {
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }
-const lavas = [ new Lava(0, 500), new Lava(200, 500), new Lava(400, 500), new Lava(600, 500), new Lava(700, 500),  ]
+const lavas = [ new Lava(0, 500), new Lava(200, 500), new Lava(400, 500), new Lava(600, 500), new Lava(700, 500), new Lava(800, 500), new Lava(900,500),
+new Lava(1000,500), new Lava(1100,500), new Lava(1200,500), new Lava(1300,500), new Lava(1400,500), new Lava(1500,500), new Lava(1600,500), new Lava(1700,500), 
+new Lava(1800,500), new Lava(1900,500), new Lava (2000,500), new Lava(2100,500), new Lava(2200,500), new Lava(2300,500), new Lava(2400,500), new Lava(2500,500), ]
 
 
 
@@ -70,14 +72,28 @@ let x = 100;
 let y = 250;
 
 function moveP1(){
-    if(direction === 'left'){
+    if(direction === 'left' ){
         p1.velocity.x = p1.velocity.x - 2
     }
-    if(direction === 'up'){
-        p1.velocity.y = p1.velocity.x - 2
+    if(direction === 'up'&& p1.block){
+        let count = 0
+        let interval = setInterval(()=>{
+            count += 1
+            if (count > 10){
+                clearInterval(interval)
+            }
+
+            p1.velocity.y = p1.velocity.x - 3
+        },1)
     }
-    if(direction === 'right'){
+    if(direction === 'right' && p1.position.x < 200){
         p1.velocity.x = p1.velocity.x + 2
+    }
+    else { p1.velocity.x = 0
+        if (direction.right.keydown){
+            platform.position.x -= 2
+        }
+
     }
     if(direction === 'down'){
        p1.velocity.y = p1.velocity.y + 2
@@ -95,7 +111,7 @@ function moveP1(){
     }
     console.log(p1.block)
     if (p1.block == false ) { 
-        p1.velocity.y += 0.1
+        p1.velocity.y += 0.06
 
     } else {
         p1.velocity.y  = 0
@@ -123,17 +139,30 @@ function animate(){
     moveP1()
     c.clearRect(0,0, canvas.width, canvas.height)
     p1.create()
-    platforms.forEach(platform => {
-        //console.log(platform.position.x, platform.width)
-        platform.make()
-        if(p1.position.y + p1.height >= platform.position.y && p1.position.x + p1.width  >= platform.position.x && p1.position.x <= platform.position.x + platform.width){
-            //player.velocity.y = 0
-           p1.block = true 
+   // .find will check EACH platform 
+    // until one "passes the test" in the if statement
+    const foundPlatform = platforms.find(platform => {
+        if(
+            p1.position.y + p1.height >= platform.position.y 
+            && p1.position.x + p1.width >= platform.position.x 
+            && p1.position.x <= platform.position.x + platform.width
+        ){
+           return true 
         }
-        else {
-            p1.block = false
-        }
-    }  )
+        })
+
+    // if one platform is found to be blocking above,
+    // we set p1.block to true
+    if (foundPlatform) {
+        p1.block = true
+    } else {
+        p1.block = false
+    }
+    
+    
+   //if(keydown.ArrowRight&& p1.position.x > 200 )  
+
+    platforms.forEach(platform => platform.make())
     lavas.forEach(lava => lava.make())
     
     
